@@ -33,6 +33,7 @@ vim.cmd("nnoremap <silent> tn :NvimTreeToggle<CR>")
 vim.api.nvim_set_keymap("n", "tl", ":lua require('mymodules/lv-searchdir').live_grep()<CR>", {noremap=true, silent=true})
 vim.api.nvim_set_keymap("n", "tf", ":lua require('mymodules/lv-searchdir').find_files()<CR>", {noremap=true, silent=true})
 vim.api.nvim_set_keymap("n", "tc", ":lua require('mymodules/lv-searchconfigs').search_configs()<CR>", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("n", "tb", ":Tagbar<CR>", {noremap=true, silent=true})
 vim.api.nvim_set_keymap("n", "F", ":Neoformat<CR>", {noremap=true, silent=true})
 
 -- TODO: User Config for predefined plugins
@@ -80,10 +81,14 @@ else
     require"lsp_signature".on_attach(cfg)
  end
 end
+-- The docs says if you specify table.remove with out a postion, you remove the last element
+-- The last element is the deprecated use_decoration_api
+-- table.remove(lvim.builtin.gitsigns.signs, 44)
+-- lvim.builtin.gitsigns.signs
 
 -- lvim.builtin.compe.preselect = "always"
-lvim.builtin.autopairs.map_cr = true
-lvim.builtin.autopairs.map_complete = true
+-- lvim.builtin.autopairs.map_cr = true
+-- lvim.builtin.autopairs.map_complete = true
 lvim.builtin.telescope.defaults.sorting_strategy = "ascending"
 lvim.builtin.telescope.defaults.layout_config.prompt_position = "top"
 lvim.builtin.telescope.defaults.file_ignore_patterns = {".git/", "node_modules/", "vendor/"}
@@ -121,9 +126,9 @@ lvim.plugins = {
               vim.g.go_code_completion_enabled = 0 -- this collides with lsp
               vim.g.go_doc_keywordprg_enabled = 0 -- this collieds with lsp
               vim.g.go_doc_popup_window = 0 -- force this not to pop
-              vim.g.go_def_mapping_enabled = 1 -- collides with lsp, FIX: they con't collide, they point to their own servers
+              vim.g.go_def_mapping_enabled = 1 -- collides with lsp, FIX: they don't collide, they point to their own servers
               vim.g.go_gopls_enabled = 1 -- ensures we are  using the lsp, and no collison with vim-go
-              vim.g.go_gopls_use_placeholders = 0 -- turn this off 
+              vim.g.go_gopls_use_placeholders = 0 -- turn this off
               vim.g.go_echo_go_info = 0 -- turn this off, use :help vim-go to see what it does
               vim.g.go_imports_autosave = 0 -- turn this off, lsp supports this feature
               vim.g.go_fmt_autosave = 0 -- turn this off, we can use Neoformat
@@ -132,6 +137,10 @@ lvim.plugins = {
           end,
           tag = "v1.25", -- this is the last stable version of vim-go
           ft = {"go", "gomod"}
+    },
+    {
+      "majutsushi/tagbar",
+      event="BufRead",
     },
 }
 

@@ -6,7 +6,7 @@ end
 
 M.search_configs = function()
   local opts = {}
-  opts.prompt_title = "🛠  Nvim Configs"
+  opts.prompt_title = "🛠  Lvim Configs"
   opts.search_dirs = {"/home/armando/.local/share/lunarvim/lvim"}
   opts.path_display = {"absolute"}
   opts.cwd = "/home/armando/.local/share/lunarvim/lvim"
