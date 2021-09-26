@@ -34,6 +34,7 @@ vim.api.nvim_set_keymap("n", "tl", ":lua require('mymodules/lv-searchdir').live_
 vim.api.nvim_set_keymap("n", "tf", ":lua require('mymodules/lv-searchdir').find_files()<CR>", {noremap=true, silent=true})
 vim.api.nvim_set_keymap("n", "tc", ":lua require('mymodules/lv-searchconfigs').search_configs()<CR>", {noremap=true, silent=true})
 vim.api.nvim_set_keymap("n", "tb", ":Tagbar<CR>", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("n", "<leader>S", ":SymbolsOutline<CR>", {noremap=true, silent=true})
 vim.api.nvim_set_keymap("n", "F", ":Neoformat<CR>", {noremap=true, silent=true})
 
 -- TODO: User Config for predefined plugins
@@ -63,8 +64,22 @@ lvim.builtin.dashboard.custom_header = require("myconfigs/dashboard").my_custom_
 --   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 -- end
 
+-- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
+lvim.builtin.telescope.on_config_done = function()
+  local actions = require "telescope.actions"
+  -- for input mode
+  lvim.builtin.telescope.defaults.mappings.i["<C-j>"] = actions.move_selection_next
+  lvim.builtin.telescope.defaults.mappings.i["<C-k>"] = actions.move_selection_previous
+  lvim.builtin.telescope.defaults.mappings.i["<C-n>"] = actions.cycle_history_next
+  lvim.builtin.telescope.defaults.mappings.i["<C-p>"] = actions.cycle_history_prev
+  -- for normal mode
+  lvim.builtin.telescope.defaults.mappings.n["<C-j>"] = actions.move_selection_next
+  lvim.builtin.telescope.defaults.mappings.n["<C-k>"] = actions.move_selection_previous
+end
+
 lvim.lang.lua.formatter = {} -- We may get some more speed turning this off
 lvim.lang.lua.linters = {} -- Live linter is slowing lua down, we should lint on save
+lvim.lang.go.formatters = {{exe = "goimports", args = {} }, {exe = "gofmt", args = {}}}
 lvim.lang.go.lsp.setup.settings = { gopls = { analyses = { unusedparams = true }, staticcheck = true } }
 -- lvim.lang.go.lsp.setup.init_options = { usePlaceholders = true, completeUnimported = true }
 lvim.lang.go.lsp.setup.init_options = { completeUnimported = true } -- usePlaceholders is a cool feature, but I'm not gonna use it
@@ -138,10 +153,16 @@ lvim.plugins = {
           tag = "v1.25", -- this is the last stable version of vim-go
           ft = {"go", "gomod"}
     },
+    -- {
+    --   "majutsushi/tagbar",
+    --   event="BufRead",
+    -- },
     {
-      "majutsushi/tagbar",
-      event="BufRead",
+      "simrat39/symbols-outline.nvim"
     },
+    {
+      "folke/trouble.nvim",
+    }
 }
 
 
@@ -155,3 +176,12 @@ vim.opt.relativenumber = true
 vim.cmd("autocmd BufEnter * silent! lcd %:h")
 
 -- Additional Leader bindings for WhichKey
+lvim.builtin.which_key.mappings["t"] = {
+  name = "+Trouble",
+  r = { "<cmd>Trouble lsp_references<cr>", "References" },
+  f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
+  d = { "<cmd>Trouble lsp_document_diagnostics<cr>", "Diagnostics" },
+  q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
+  l = { "<cmd>Trouble loclist<cr>", "LocationList" },
+  w = { "<cmd>Trouble lsp_workspace_diagnostics<cr>", "Diagnostics" },
+}
