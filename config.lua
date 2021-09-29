@@ -33,8 +33,8 @@ vim.cmd("nnoremap <silent> tn :NvimTreeToggle<CR>")
 vim.api.nvim_set_keymap("n", "tl", ":lua require('mymodules/lv-searchdir').live_grep()<CR>", {noremap=true, silent=true})
 vim.api.nvim_set_keymap("n", "tf", ":lua require('mymodules/lv-searchdir').find_files()<CR>", {noremap=true, silent=true})
 vim.api.nvim_set_keymap("n", "tc", ":lua require('mymodules/lv-searchconfigs').search_configs()<CR>", {noremap=true, silent=true})
-vim.api.nvim_set_keymap("n", "tb", ":Tagbar<CR>", {noremap=true, silent=true})
-vim.api.nvim_set_keymap("n", "<leader>S", ":SymbolsOutline<CR>", {noremap=true, silent=true})
+-- vim.api.nvim_set_keymap("n", "tb", ":Tagbar<CR>", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("n", "tb", ":SymbolsOutline<CR>", {noremap=true, silent=true})
 vim.api.nvim_set_keymap("n", "F", ":Neoformat<CR>", {noremap=true, silent=true})
 
 -- TODO: User Config for predefined plugins
@@ -158,10 +158,12 @@ lvim.plugins = {
     --   event="BufRead",
     -- },
     {
-      "simrat39/symbols-outline.nvim"
+      "simrat39/symbols-outline.nvim",
+      event="BufRead"
     },
     {
       "folke/trouble.nvim",
+      event="BufRead"
     }
 }
 
