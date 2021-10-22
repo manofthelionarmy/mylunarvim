@@ -1,4 +1,5 @@
 -- THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
+--
 
 -- general
 lvim.format_on_save = true
@@ -38,6 +39,8 @@ vim.api.nvim_set_keymap("n", "tb", ":SymbolsOutline<CR>", {noremap=true, silent=
 vim.api.nvim_set_keymap("n", "F", ":Neoformat<CR>", {noremap=true, silent=true})
 vim.api.nvim_set_keymap("n", "gd", "gdzz", {noremap=true, silent=true})
 vim.api.nvim_set_keymap("n", "o", "o<Esc>zzi", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("n", "j", "jzz", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("n", "k", "kzz", {noremap=true, silent=true})
 vim.api.nvim_set_keymap("n", "O", "O<Esc>zzi", {noremap=true, silent=true})
 
 -- TODO: User Config for predefined plugins
@@ -174,6 +177,12 @@ lvim.plugins = {
 
 vim.opt.number = true
 vim.opt.relativenumber = true
+
+lvim.autocommands.custom_groups = {
+  {"BufNewFile", "dashboard", "set scrolloff=0"},
+  {"Filetype", "dashboard", "set scrolloff=0"},
+  {"Filetype", "*\\(dashboard\\)\\@<!", "set scrolloff=999"},
+}
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 -- lvim.autocommands.custom_groups = {
