@@ -36,6 +36,9 @@ vim.api.nvim_set_keymap("n", "tc", ":lua require('mymodules/lv-searchconfigs').s
 -- vim.api.nvim_set_keymap("n", "tb", ":Tagbar<CR>", {noremap=true, silent=true})
 vim.api.nvim_set_keymap("n", "tb", ":SymbolsOutline<CR>", {noremap=true, silent=true})
 vim.api.nvim_set_keymap("n", "F", ":Neoformat<CR>", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("n", "gd", "gdzz", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("n", "o", "o<Esc>zzi", {noremap=true, silent=true})
+vim.api.nvim_set_keymap("n", "O", "O<Esc>zzi", {noremap=true, silent=true})
 
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
@@ -159,7 +162,8 @@ lvim.plugins = {
     -- },
     {
       "simrat39/symbols-outline.nvim",
-      event="BufRead"
+      event="BufRead",
+      commit="28c5b0513a9da37b1842a16184555a041eb4b72d"
     },
     {
       "folke/trouble.nvim",
